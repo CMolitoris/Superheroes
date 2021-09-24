@@ -1,6 +1,8 @@
+# from typing_extensions import ParamSpecKwargs
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Superhero
+from django.urls import reverse
 
 # Create your views here.
 
@@ -18,3 +20,32 @@ def detail(request,hero_id):
     }
     return render(request, 'superheroes/detail.html',context)
 
+def update(request,hero_id):
+    hero = Superhero.objects.get(pk=hero_id)
+    context = {
+        'hero': hero
+    }
+    if request.method == "POST":
+        name = request.POST.get('name')
+        alter_ego = request.POST.get('alter_ego')
+        primary = request.POST.get('primary_ability')
+        secondary = request.POST.get('secondary_ability')
+        catch_phrase = request.POST.get('catch_phrase')
+        new_hero = Superhero(name=name,alter_ego=alter_ego,primary_ability=primary,secondary_ability=secondary,catch_phrase=catch_phrase)
+        new_hero.save()
+        return HttpResponseRedirect(reverse('superheroes:index'))
+    else:
+        return render(request,'superheroes/update.html',context)
+
+def create(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        alter_ego = request.POST.get('alter_ego')
+        primary = request.POST.get('primary_ability')
+        secondary = request.POST.get('secondary_ability')
+        catch_phrase = request.POST.get('catch_phrase')
+        new_hero = Superhero(name=name,alter_ego=alter_ego,primary_ability=primary,secondary_ability=secondary,catch_phrase=catch_phrase)
+        new_hero.save()
+        return HttpResponseRedirect(reverse('superheroes:index'))
+    else:
+        return render(request,'superheroes/create.html')

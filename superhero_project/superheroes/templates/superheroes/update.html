@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Hero</title>
+</head>
+<body>
+    <form action="{% url 'superheroes:update' hero.id %}" method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name" id="name" value="{{hero.name}}"><br>
+        Alter Ego: <input type="text" name="alter_ego" id="alter_ego" value="{{hero.alter_ego}}"><br>
+        Primary Ability: <input type="text" name="primary_ability" id="primary_ability" value="{{hero.primary_ability}}"><br>
+        Secondary Ability: <input type="text" name="secondary_ability" id="secondary_ability" value="{{hero.secondary_ability}}"><br>
+        Catch Phrase: <input type="text" name="catch_phrase" id="catch_phrase" value="{{hero.catch_phrase}}"><br>
+        <input type="submit" value="Update!">
+
+
+
+
+
+    </form>
+</body>
+</html>
